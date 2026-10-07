@@ -1,5 +1,6 @@
 import asyncio
 import json
+import os
 import random
 from datetime import time as dt_time
 from zoneinfo import ZoneInfo
@@ -7,6 +8,9 @@ from zoneinfo import ZoneInfo
 import discord
 from discord import app_commands
 from discord.ext import tasks
+from dotenv import load_dotenv
+
+load_dotenv()
 
 
 # ============================================================
@@ -47,7 +51,7 @@ with open("images.json", "r", encoding="utf-8") as f:
 # SETTINGS
 # ============================================================
 
-TOKEN = config.get("token")
+TOKEN = os.getenv("DISCORD_TOKEN") or config.get("token")
 
 # Global dynamic setting variables (populated via config or /set commands)
 CHANNEL_ID = config.get("channel_id")
@@ -463,7 +467,7 @@ async def on_disconnect():
 # ============================================================
 
 if not TOKEN or TOKEN in ["PASTE_BOT_TOKEN_HERE", "YOUR_BOT_TOKEN", "YOUR_ACTUAL_BOT_TOKEN"]:
-    raise RuntimeError("Put your Discord bot token in config.json.")
+    raise RuntimeError("Put your Discord bot token in the DISCORD_TOKEN env var or config.json.")
 
 
 # ============================================================
