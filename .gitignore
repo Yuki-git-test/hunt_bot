@@ -1,0 +1,20 @@
+# Python cache
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual environment
+venv/
+
+# Environment variables (bot token, etc)
+.env
+
+# Logs
+*.log
+
+# Config (may contain secrets)
+config.json
+
+# macOS system junk
+.DS_Store
+
