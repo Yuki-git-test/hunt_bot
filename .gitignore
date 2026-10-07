@@ -12,9 +12,6 @@ venv/
 # Logs
 *.log
 
-# Config (may contain secrets)
-config.json
-
 # macOS system junk
 .DS_Store
 

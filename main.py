@@ -12,11 +12,18 @@ from dotenv import load_dotenv
 load_dotenv()
 
 # ============================================================
-# LOAD CONFIG
+# LOAD CONFIG (env vars take priority; config.json is optional)
 # ============================================================
 
-with open("config.json", "r", encoding="utf-8") as f:
-    config = json.load(f)
+config = {}
+if os.path.exists("config.json"):
+    with open("config.json", "r", encoding="utf-8") as f:
+        config = json.load(f)
+
+
+def cfg(key, default=None):
+    """Read a setting from the environment first, then config.json."""
+    return os.getenv(key.upper()) or config.get(key, default)
 
 
 # ============================================================
@@ -33,21 +40,21 @@ with open("images.json", "r", encoding="utf-8") as f:
 
 TOKEN = os.getenv("DISCORD_TOKEN") or config.get("token")
 
-CHANNEL_ID = int(config["channel_id"])
+CHANNEL_ID = int(cfg("channel_id"))
 
 # Role that gets pinged for every hunt
-ROLE_ID = int(config["role_id"])
+ROLE_ID = int(cfg("role_id"))
 
 # Role allowed to use /vnareroll
-MANAGER_ROLE_ID = int(config["manager_role_id"])
+MANAGER_ROLE_ID = int(cfg("manager_role_id"))
 
 # Daily hunt time
-POST_HOUR = int(config.get("post_hour", 9))
-POST_MINUTE = int(config.get("post_minute", 30))
+POST_HOUR = int(cfg("post_hour", 9))
+POST_MINUTE = int(cfg("post_minute", 30))
 
 # Timezone
 TIMEZONE = ZoneInfo(
-    config.get("timezone", "Asia/Kolkata")
+    cfg("timezone", "Asia/Kolkata")
 )
 
 # User who should be mentioned for proof
